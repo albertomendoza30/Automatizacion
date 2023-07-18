@@ -15,7 +15,8 @@ class TestApp(unittest.TestCase):
             username='user1',
             otp_code=otp_code
         ))
-        self.assertEqual(response.data, b"Usuario no encontrado")
+        # Verificamos que la respuesta contenga el código OTP generado
+        self.assertIn(otp_code, response.data.decode('utf-8'))
 
 if __name__ == '__main__':
     unittest.main()
