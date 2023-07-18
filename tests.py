@@ -17,7 +17,7 @@ class TestApp(unittest.TestCase):
             password='password123',
             otp_code='123456'
         ))
-        self.assertIn(b"Inicio de sesión exitoso", response.data)
+self.assertIn(b"Inicio de sesión exitoso", response.data)
 
     def test_correct_login_without_otp(self):
         response = self.app.post('/login', data=dict(
