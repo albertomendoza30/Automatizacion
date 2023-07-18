@@ -29,8 +29,10 @@ def login():
         totp = pyotp.TOTP(users_database[username]['otp_secret'])
         if totp.verify(otp_code):
             return "Inicio de sesión exitoso"
-    
-    return "Credenciales inválidas o Código OTP incorrecto"
+        else:
+            return "Código OTP incorrecto"
+    else:
+        return "Credenciales inválidas"
 
 if __name__ == '__main__':
     app.run(debug=True)
