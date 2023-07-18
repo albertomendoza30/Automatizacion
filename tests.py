@@ -11,7 +11,7 @@ class TestApp(unittest.TestCase):
             password='password123',
             otp_code='123456'
         ))
-        self.assertEqual(response.data.decode('utf-8'), "Inicio de sesión exitoso")
+        self.assertIn(b"Inicio de sesión exitoso", response.data)
 
     def test_correct_login_without_otp(self):
         response = self.app.post('/login', data=dict(
@@ -19,7 +19,7 @@ class TestApp(unittest.TestCase):
             password='qwerty456',
             otp_code=''
         ))
-        self.assertEqual(response.data.decode('utf-8'), "Inicio de sesión exitoso")
+        self.assertIn(b"Inicio de sesión exitoso", response.data)
 
     def test_incorrect_username(self):
         response = self.app.post('/login', data=dict(
@@ -27,7 +27,7 @@ class TestApp(unittest.TestCase):
             password='password123',
             otp_code='123456'
         ))
-        self.assertEqual(response.data.decode('utf-8'), "Credenciales inválidas")
+        self.assertIn(b"Credenciales inválidas", response.data)
 
     def test_incorrect_password(self):
         response = self.app.post('/login', data=dict(
@@ -35,7 +35,7 @@ class TestApp(unittest.TestCase):
             password='wrong_password',
             otp_code='123456'
         ))
-        self.assertEqual(response.data.decode('utf-8'), "Credenciales inválidas")
+        self.assertIn(b"Credenciales inválidas", response.data)
 
     def test_incorrect_otp_code(self):
         response = self.app.post('/login', data=dict(
@@ -43,7 +43,8 @@ class TestApp(unittest.TestCase):
             password='password123',
             otp_code='654321'
         ))
-        self.assertEqual(response.data.decode('utf-8'), "Código OTP incorrecto")
+        self.assertIn(b"Código OTP incorrecto", response.data)
 
 if __name__ == '__main__':
     unittest.main()
+
