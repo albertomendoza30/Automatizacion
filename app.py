@@ -3,7 +3,7 @@ import pyotp
 
 app = Flask(__name__)
 
-# Base de datos simulada (se debe reemplazar con una real en un entorno de producción)
+# Usuarios de prueba (se deben reemplazar con usuarios reales en un entorno de producción)
 users_database = {
     "user1": {
         "password": "password123",
@@ -22,17 +22,18 @@ def index():
 @app.route('/login', methods=['POST'])
 def login():
     username = request.form['username']
-    password = request.form['password']
-    otp_code = request.form['otp_code']
 
-    if username in users_database and users_database[username]['password'] == password:
+    # Verificar si el usuario existe en la base de datos de prueba
+    if username in users_database:
+        # Generar un token OTP para el usuario
         totp = pyotp.TOTP(users_database[username]['otp_secret'])
-        if totp.verify(otp_code):
-            return "Inicio de sesión exitoso"
-        else:
-            return "Código OTP incorrecto"
-    else:
-        return "Credenciales inválidas"
+        otp_code = totp.now()
+
+        # Devolver el código OTP al cliente para las pruebas
+        return otp_code
+
+    # Si el usuario no existe, devolver un código de error
+    return "Usuario no encontrado", 404
 
 if __name__ == '__main__':
     app.run(debug=True)
