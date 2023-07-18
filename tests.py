@@ -6,20 +6,20 @@ class TestApp(unittest.TestCase):
         self.app = app.test_client()
 
     def test_correct_login_with_otp(self):
-        response = self.app.post('/login', data=dict(
-            username='user1',
-            password='password123',
-            otp_code='123456'
-        ))
-        self.assertIn("Inicio de sesión exitoso", response.data.decode('utf-8'))
+    response = self.app.post('/login', data=dict(
+        username='user1',
+        password='password123',
+        otp_code='123456'
+    ))
+    self.assertEqual(response.data.decode('utf-8'), "Inicio de sesión exitoso")
 
-    def test_correct_login_without_otp(self):
-        response = self.app.post('/login', data=dict(
-            username='user2',
-            password='qwerty456',
-            otp_code=''
-        ))
-        self.assertIn("Inicio de sesión exitoso", response.data.decode('utf-8'))
+def test_correct_login_without_otp(self):
+    response = self.app.post('/login', data=dict(
+        username='user2',
+        password='qwerty456',
+        otp_code=''
+    ))
+    self.assertEqual(response.data.decode('utf-8'), "Inicio de sesión exitoso")
 
     def test_incorrect_username(self):
         response = self.app.post('/login', data=dict(
