@@ -15,9 +15,7 @@ class TestApp(unittest.TestCase):
             username='user1',
             otp_code=otp_code
         ))
-        self.assertEqual(response.data, b"Usuario no encontrado", 404)
-
-    # ... Resto de las pruebas ...
+        self.assertEqual(response.data, b"Usuario no encontrado")
 
 if __name__ == '__main__':
     unittest.main()
